@@ -6,6 +6,10 @@
     "data": "./data",
     "lib": "./lib"
   },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  },
   "main": "./lib/index.js",
   "bin": "./bin/thumbd.js",
   "author": "Ben Coe <bencoe@gmail.com>",
