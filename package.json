@@ -6,14 +6,13 @@
     "data": "./data",
     "lib": "./lib"
   },
-  "engines": {
-    "node": "0.8.x",
-    "npm": "1.1.x"
-  },
   "main": "./lib/index.js",
   "bin": "./bin/thumbd.js",
-  "author": "Ben Coe <bencoe@gmail.com>"
- },
+  "author": "Ben Coe <bencoe@gmail.com>",
+  "engines": {
+    "node": "0.10.29",
+    "npm": "1.4.14"
+  },
   "config": {
     "blanket": {
       "data-cover-never": [
@@ -89,6 +88,7 @@
     "nock": "^2.9.1",
     "nyc": "^3.0.1",
     "sinon": "^1.12.2",
-    "standard": "^4.5.4"
+    "standard": "^4.5.4", 
+    "postinstall": "^0.4.2"
   }
 }
