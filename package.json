@@ -12,7 +12,7 @@
   },
   "main": "./lib/index.js",
   "bin": "./bin/thumbd.js",
-  "author": "Ben Coe <bencoe@gmail.com>",
+  "author": "Ben Coe <bencoe@gmail.com>"
  },
   "config": {
     "blanket": {
