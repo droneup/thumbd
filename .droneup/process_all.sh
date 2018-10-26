@@ -2,7 +2,7 @@
 aws=$(which aws)
 [ -z "$aws" ] && echo "AWS-Cli missing, please install \"apt-get install aws-cli\"" || echo " -- Found aws-cli"
 
-if [ -z "$ENVKEY" ]; then
+if [ ! -z "$ENVKEY" ]; then
     eval $(envkey-source $ENVKEY)
 fi
 
@@ -13,8 +13,11 @@ fi
 [ -z "$PROCESSED_DIR" ] && echo "Missing processed dir, where jpgs are stored" && exit 1 || echo "Found PROCESSED_DIR"
 
 bucket=${BUCKET}
-staging_dir=${STAGING_DIR}
-processed_dir=${PROCESSED_DIR}
+staging_dir=$(realpath $STAGING_DIR)
+processed_dir=$(realpath $PROCESSED_DIR)
+
+mkdir -p ${staging_dir} | true
+mkdir -p ${processed_dir} | true
 
 #eval ${PWD}/fill_staging.sh $bucket $staging_dir
 all_json=$(find ${staging_dir} -name "*.json")
