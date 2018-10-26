@@ -27,6 +27,8 @@ RUN apt-get update \
 #  npm install nan && npm install thumbd && npm cache clear && \
 #  chown -R node:node /srv/node && \
 #  /root/post-install
+RUN wget --quiet https://github.com/envkey/envkey-source/releases/download/v1.2.2/envkey-source_1.2.2_linux_amd64.tar.gz
+RUN tar -xvf envkey-source_1.2.2_linux_amd64.tar.gz && mv envkey-source /usr/local/bin && chmod +x /usr/local/bin/envkey-source
 ADD . /src
 WORKDIR /src
 RUN NODE_ENV=production npm install
