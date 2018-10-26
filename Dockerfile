@@ -30,5 +30,5 @@ RUN apt-get update \
 ADD . /src
 WORKDIR /src
 RUN NODE_ENV=production npm install
-ADD ./.droneup:/.droneup
+ADD ./.droneup /.droneup
 CMD ["/.droneup/process_files.sh"]
