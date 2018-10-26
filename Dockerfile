@@ -32,3 +32,4 @@ WORKDIR /src
 RUN NODE_ENV=production npm install
 ADD ./.droneup /.droneup
 CMD ["/.droneup/process_files.sh"]
+ENTRYPOINT ["/.droneup/init.sh"]
