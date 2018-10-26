@@ -1,4 +1,9 @@
 #!/bin/bash
+
+if [ -z "$ENVKEY" ]; then
+    eval $(envkey-source $ENVKEY)
+fi
+
 [ -z "$AWS_KEY" ] && echo "Missing AWS_KEY in environment" && exit -1 || echo "Found AWS_KEY"
 [ -z "$AWS_SECRET" ] && echo "Missing AWS_SECRET in environment" && exit -1 || echo "Found AWS_SECRET"
 [ -z "$BUCKET" ] && echo "Missing Bucket name with JSON/MP4's" && exit 1 || echo "Found BUCKET"
