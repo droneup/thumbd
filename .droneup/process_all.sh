@@ -19,7 +19,7 @@ processed_dir=$(realpath $PROCESSED_DIR)
 mkdir -p ${staging_dir} | true
 mkdir -p ${processed_dir} | true
 
-#eval ${PWD}/fill_staging.sh $bucket $staging_dir
+eval ${PWD}/fill_staging.sh $bucket $staging_dir
 all_json=$(find ${staging_dir} -name "*.json")
 
 # For each directory in staging, so we can have GUID (its in s3 path)
