@@ -13,7 +13,6 @@ RUN apt-get update -qq && apt-get install -y tzdata --no-install-recommends \
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     imagemagick \
     checkinstall \
-    libssl-dev \
     vim \
     nano \
     build-essential \
