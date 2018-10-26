@@ -8,10 +8,10 @@ bucket=""
 staging_dir=""
 aws=$(which aws)
 
-if [ -z "$ENVKEY" ]; then
+if [ ! -z "$ENVKEY" ]; then
     eval $(envkey-source $ENVKEY)
     bucket=$BUCKET
-    staging_dir=$STAGING_DIR
+    staging_dir=$(realpath $STAGING_DIR)
 else
     bucket="s3://$1"
     staging_dir=$2
@@ -25,5 +25,6 @@ fi
 echo " -- Cleaning out $staging_dir"
 rm -rf ${staging_dir}/* | true
 [ ! -d ${staging_dir} ] && mkdir ${staging_dir}
+echo 'Executing this s3 cmd: s3 cp "$bucket" ${staging_dir} --recursive --exclude "*" --include "*.json"'
 ${aws} s3 cp "$bucket" ${staging_dir} --recursive --exclude "*" --include "*.json"
 
