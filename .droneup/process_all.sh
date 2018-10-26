@@ -1,4 +1,6 @@
 #!/bin/bash
+aws=$(which aws)
+[ -z "$aws" ] && echo "AWS-Cli missing, please install \"apt-get install aws-cli\"" || echo " -- Found aws-cli"
 
 if [ -z "$ENVKEY" ]; then
     eval $(envkey-source $ENVKEY)
@@ -28,6 +30,8 @@ for d in ${staging_dir}/* ; do
       s3fullpath=${bucket}/$folder/$mp4name
       auth_http=$(aws s3 presign $s3fullpath)
       mkdir -p ${processed_dir}/$folder
-      ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg      
+      ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg
+      ${aws} s3 cp ${processed_dir}/$folder/$baseName.jpg s3://${bucket}/${folder}/${baseName}.jpg
+      echo " -- Copied thumbnail to s3://${bucket}/${folder}/${baseName}.jpg"
     done
 done

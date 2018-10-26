@@ -2,6 +2,7 @@
 json_dir="$1" #This is a User.objectId, but probably should be a Media.objectId
 staging_dir=""
 aws=$(which aws)
+[ -z "$aws" ] && echo "AWS-Cli missing, please install \"apt-get install aws-cli\"" || echo " -- Found aws-cli"
 
 if [ -z "$ENVKEY" ]; then
     eval $(envkey-source $ENVKEY)
