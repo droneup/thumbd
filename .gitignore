@@ -1,3 +1,6 @@
+staged/
+staging/
+processed/
 .env
 .DS_Store
 node_modules
