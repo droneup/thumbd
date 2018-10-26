@@ -20,15 +20,16 @@ mkdir -p ${staging_dir} | true
 mkdir -p ${processed_dir} | true
 
 #eval ${PWD}/fill_staging.sh $bucket $staging_dir
-all_videos=$(aws s3 ls $bucket --recursive)
+all_videos=$(aws s3 ls $BUCKET --recursive | awk '{print $4}')
 
 # For each directory in staging, so we can have GUID (its in s3 path)
-for d in ${staging_dir}/* ; do
-    folder=$(basename "$d")
-    videoname=${mp4name:1:-1} #Prior results had " " surrounding, remove them.
-    echo "VIDEONAME: $videoname"  #Not sure if it'll have quotes, betting not, it does with JQ Results.
+for d in $all_videos; do
+    folder=$(dirname $d)
+    videoname=$(basename $d)
     baseName=$(basename -- $videoname)
+    echo "BASENAME: $basename"
     s3fullpath=${bucket}/$folder/$videoname
+    echo "S3FULLPATH: $s3fullpath"
     auth_http=$(aws s3 presign $s3fullpath)
     mkdir -p ${processed_dir}/$folder
     ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg
