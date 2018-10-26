@@ -19,22 +19,20 @@ processed_dir=$(realpath $PROCESSED_DIR)
 mkdir -p ${staging_dir} | true
 mkdir -p ${processed_dir} | true
 
-eval ${PWD}/fill_staging.sh $bucket $staging_dir
-all_json=$(find ${staging_dir} -name "*.json")
+#eval ${PWD}/fill_staging.sh $bucket $staging_dir
+all_videos=$(find ${staging_dir})
 
 # For each directory in staging, so we can have GUID (its in s3 path)
 for d in ${staging_dir}/* ; do
     folder=$(basename "$d")
-    json_files=$(ls -a ${staging_dir}/$folder/*.json)
-    for json in $json_files; do
-      mp4name=$(cat $json | jq '.File')
-      mp4name=${mp4name:1:-1} #Prior results had " " surrounding, remove them.
-      baseName=$(basename -- $mp4name)
-      s3fullpath=${bucket}/$folder/$mp4name
-      auth_http=$(aws s3 presign $s3fullpath)
-      mkdir -p ${processed_dir}/$folder
-      ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg
-      ${aws} s3 cp ${processed_dir}/$folder/$baseName.jpg s3://${bucket}/${folder}/${baseName}.jpg
-      echo " -- Copied thumbnail to s3://${bucket}/${folder}/${baseName}.jpg"
-    done
+    videoname=${mp4name:1:-1} #Prior results had " " surrounding, remove them.
+    echo "VIDEONAME: $videoname"  #Not sure if it'll have quotes, betting not, it does with JQ Results.
+    baseName=$(basename -- $videoname)
+    s3fullpath=${bucket}/$folder/$videoname
+    auth_http=$(aws s3 presign $s3fullpath)
+    mkdir -p ${processed_dir}/$folder
+    ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg
+    ${aws} s3 cp ${processed_dir}/$folder/$baseName.jpg s3://${bucket}/${folder}/${baseName}.jpg
+    echo " -- Copied thumbnail to s3://${bucket}/${folder}/${baseName}.jpg"
+    #done
 done
