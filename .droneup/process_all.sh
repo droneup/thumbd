@@ -24,17 +24,21 @@ all_videos=$(aws s3 ls $BUCKET --recursive | awk '{print $4}')
 
 # For each directory in staging, so we can have GUID (its in s3 path)
 for d in $all_videos; do
-    folder=$(dirname $d)
-    videoname=$(basename $d)
-    baseName=$(basename -- $videoname)
-    echo "BASENAME: $basename"
-    s3fullpath=${bucket}/$folder/$videoname
-    echo "S3FULLPATH: $s3fullpath"
-    auth_http=$(aws s3 presign $s3fullpath)
-    mkdir -p ${processed_dir}/$folder
-    ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg
-    ${aws} s3 cp ${processed_dir}/$folder/$baseName.jpg s3://${bucket}/${folder}/${baseName}.jpg
-    echo " -- Copied thumbnail to s3://${bucket}/${folder}/${baseName}.jpg"
-    #done
-    exit 0
+    # Horrible check, but see if string has a . in it, which means its a file type of something.  
+    # Could still fail
+    if [[ $d == *.* ]]; then 
+        folder=$(dirname $d)
+        videoname=$(basename $d)
+        baseName=$(basename -- $videoname)
+        echo "BASENAME: $basename"
+        s3fullpath=${bucket}/$folder/$videoname
+        echo "S3FULLPATH: $s3fullpath"
+        auth_http=$(aws s3 presign $s3fullpath)
+        mkdir -p ${processed_dir}/$folder
+        ffmpeg -noaccurate_seek -ss 00:00:01 -i ${auth_http} -frames:v 1 ${processed_dir}/$folder/$baseName.jpg
+        ${aws} s3 cp ${processed_dir}/$folder/$baseName.jpg s3://${bucket}/${folder}/${baseName}.jpg
+        echo " -- Copied thumbnail to s3://${bucket}/${folder}/${baseName}.jpg"
+    else
+        echo "SKIPPING - $d"
+    fi
 done
