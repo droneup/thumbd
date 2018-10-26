@@ -20,7 +20,7 @@ mkdir -p ${staging_dir} | true
 mkdir -p ${processed_dir} | true
 
 #eval ${PWD}/fill_staging.sh $bucket $staging_dir
-all_videos=$(find ${staging_dir})
+all_videos=$(aws s3 ls $bucket --recursive)
 
 # For each directory in staging, so we can have GUID (its in s3 path)
 for d in ${staging_dir}/* ; do
@@ -35,4 +35,5 @@ for d in ${staging_dir}/* ; do
     ${aws} s3 cp ${processed_dir}/$folder/$baseName.jpg s3://${bucket}/${folder}/${baseName}.jpg
     echo " -- Copied thumbnail to s3://${bucket}/${folder}/${baseName}.jpg"
     #done
+    exit 0
 done
