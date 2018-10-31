@@ -2,7 +2,7 @@
 FROM jrottenberg/ffmpeg as builder
 MAINTAINER Charles Russell <charles.russell@dartflet.com>
 
-FROM ubuntu 
+FROM ubuntu
 ENV  LD_LIBRARY_PATH=/usr/local/lib
 COPY --from=builder /usr/local/ /usr/local
 # Install Thumbd
@@ -31,5 +31,5 @@ ADD . /src
 WORKDIR /src
 RUN NODE_ENV=production npm install
 ADD ./.droneup /.droneup
-CMD ["/.droneup/process_files.sh"]
+CMD ["/.droneup/process_queue.sh"]
 ENTRYPOINT ["/.droneup/init.sh"]
