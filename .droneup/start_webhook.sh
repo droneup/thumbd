@@ -3,7 +3,7 @@ var _ = require('lodash')
 var express = require('express'),
     bodyParser = require('body-parser'),
     app = express(),
-    port = process.env.WEBHOOK_PORT;
+    port = process.env.PORT || process.env.WEBHOOK_PORT;
 app.use(bodyParser.json());
 
 app.post('/', function (req, res) {

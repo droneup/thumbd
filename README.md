@@ -26,6 +26,8 @@ Given a publically readable video file via http://
 * SQS_QUEUE
 * STAGING_DIR
 * TMP_DIR
+* WEBHOOK_PORT
+* WEBHOOK_TOKEN
 
 ## Processing videos
 - Steps below require: ENVKEY defined in your shell; ie `exports ENVKEY=`
