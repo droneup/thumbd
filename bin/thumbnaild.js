@@ -31,7 +31,7 @@ var thumbnailOpts = {
   log_level: 'logLevel',
   custom_logger: 'logger'
 }
-var ndm = require('ndm')('thumbd')
+//var ndm = require('ndm')('thumbd')
 var opts = null
 // make console output nicer for missing arguments.
 process.on('uncaughtException', function (err) {
@@ -48,12 +48,12 @@ process.on('uncaughtException', function (err) {
  */
 function buildOpts (keys) {
     var opts = {}
-    var pairs = _.pairs(keys)
+    var pairs = _.pairs(process.env)
     for (var i in pairs) {
       var argvKey = pairs[i][0]
       var envKey = argvKey.toUpperCase()
       var configKey = pairs[i][1]
-      opts[configKey] = argv[argvKey] || config.get(configKey)
+      opts[configKey] = process.env[argvKey] || config.get(configKey)
       if (opts[configKey] === null) {
         throw Error("The environment variable '" + envKey + "', or command line parameter '--" + argvKey + "' must be set.")
       }
