@@ -5,7 +5,7 @@ var config = require('../lib/config').Config
 var fs = require('fs')
 var client = new thumbd.Client()
 var logger = require(config.get('logger'))
-console.log(process.env.DESCRIPTIONS);
+//console.log(process.env.DESCRIPTIONS);
 
 var opts = {
   aws_key: process.env.AWS_KEY,
