@@ -49,6 +49,21 @@ Build Container `docker build . -t du-thumbd`
 
 Execute: `docker run -it -e ENVKEY=$ENVKEY du-thumbd .droneup/process_all.sh`
 
+## Submitting directly to SQS
+
+Using messagebody: 
+```{ prefix: 'https://s3.amazonaws.com/s3_bucket_name/folder1/file_base_name',
+  resources: [ 'https://s3.amazonaws.com/s3_bucket_name/folder1/full_file_name.mov' ],
+  descriptions: '[\n\t{\n\t\t"suffix": "tiny",\n\t\t"width": 48,\n\t\t"height": 48\n\t},\n\t{\n\t\t"suffix": "small",\n\t\t"width": 100,\n\t\t"height": 100,\n\t\t"background": "red",\n\t\t"strategy": "fill"\n\t},\n\t{\n\t\t"suffix": "medium",\n\t\t"width": 150,\n\t\t"height": 150,\n\t\t"strategy": "bounded"\n\t},\n\t{\n\t\t"suffix": "640x1096",\n\t\t"width": 640,\n\t\t"height": 1096,\n\t\t"strategy": "matted"\n\t}\n]',
+  aws_key: 'your s3 aws key',
+  aws_secret: 'your s3 aws secret',
+  aws_region: 'your s3 region',
+  remote_image: 'https://s3.amazonaws.com/s3_bucket_name/folder1/full_file_name.mov',
+  sqs_queue: 'leave empty',
+  bucket: 'your s3 bucket name',
+  log_level: 'info',
+  custom_logger: 'logger'```
+
 ### Overview of processing
 
   1. For given bucket, list all objects `aws s3 ls --recursive`
