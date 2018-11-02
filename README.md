@@ -51,8 +51,11 @@ Build Container `docker build . -t du-thumbd`
 
 Execute: `docker run -it -e ENVKEY=$ENVKEY du-thumbd .droneup/process_all.sh`
 
-## Submitting directly to SQS
+## Submitting job via curl
+`curl --header "Content-Type: application/json" --request POST --data '{"token":"webhook","obj_url":"http://somedomain.com/folder/video.mov"}' http://localhost:3000`
 
+## Submitting directly to SQS
+- Untested, should work...
 Using messagebody: 
 ```{ prefix: 'https://s3.amazonaws.com/s3_bucket_name/folder1/file_base_name',
   resources: [ 'https://s3.amazonaws.com/s3_bucket_name/folder1/full_file_name.mov' ],
