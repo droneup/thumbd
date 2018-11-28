@@ -1,14 +1,14 @@
 # du-thumbd
 
 ## Overview
-Given a publically readable video file via http:// 
-    1. Using ffmpeg, while preserving type, stream from 1 second marker, 1 second of video locally.
-    2. Upload 4 thumbnails of that clip in same S3 folder as original video.
-        * <basename>_640x1096.jpg (640X1096)
-        * <basename>_medium.jpg (150x150)
-        * <basename>_small.jpg (100x100)
-        * <basename>__tiny.jpg (48x48)
-    3. Preserving public_read acl @ Amazon
+Given a publically readable video file via http:// <br>
+    1. Using ffmpeg, while preserving type, stream from 1 second marker, saving 1 second of video local to harddisk.<br>
+    2. Upload 4 thumbnails of that clip in same S3 folder as original video.<br>
+        a. **<basename>_640x1096.jpg (640X1096)<br>**
+        b. **<basename>_medium.jpg (150x150)<br>**
+        c. **<basename>_small.jpg (100x100)<br>**
+        d. **<basename>__tiny.jpg (48x48)<br>**
+    3. Preserving public_read acl @ Amazon<br>
 
 ## Requires ENVKEY app, with the following:
 
